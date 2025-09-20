@@ -16,4 +16,8 @@ ez_brute = optimize.brute(easy_f, ((1,10),)) # [-8.8817842e-16]
 m_brute = optimize.brute(med_f, ((1,10),)) # [11.51916504]
 h_brute = optimize.brute(hard_f, ((1,10),)) # [57.5]
 
+# bisect
+ez_bisect = optimize.bisect(easy_f, 1, 10) #1.4142135623732202
+m_bisect = optimize.bisect(med_f, 1, 10) #1.895494267033314
+h_bisect = optimize.bisect(hard_f, 1, 10) #3.577152063957442
 
