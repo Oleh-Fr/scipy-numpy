@@ -34,7 +34,6 @@ h_bisect = optimize.bisect(hard_f, 1, 10) #3.577152063957442
 ez_newton = optimize.newton(easy_f, 2, fprime = easy_f_prime) # 1.4142135623730951
 m_newton = optimize.newton(med_f, 2, fprime = med_f_prime) #1.895494267033981
 h_newton = optimize.newton(hard_f, 2, fprime = hard_f_prime) #3.577152063957297
-
 # secant method
 ez_secat = optimize.newton(easy_f, 2) #1.4142135623730954
 m_secat = optimize.newton(med_f, 2) #1.895494267033981
