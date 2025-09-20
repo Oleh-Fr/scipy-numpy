@@ -39,3 +39,8 @@ ez_secat = optimize.newton(easy_f, 2) #1.4142135623730954
 m_secat = optimize.newton(med_f, 2) #1.895494267033981
 h_secat = optimize.newton(hard_f, 2) #3.577152063957297
 
+# Brenton method
+ez_brent = optimize.brentq(easy_f, 1, 5) #1.4142135623730618
+m_brent = optimize.brentq(med_f, 1, 5) #1.8954942670339796
+h_brent = optimize.brentq(hard_f, 1,5) #3.5771520639573287
+
