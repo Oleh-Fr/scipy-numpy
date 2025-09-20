@@ -21,3 +21,8 @@ ez_bisect = optimize.bisect(easy_f, 1, 10) #1.4142135623732202
 m_bisect = optimize.bisect(med_f, 1, 10) #1.895494267033314
 h_bisect = optimize.bisect(hard_f, 1, 10) #3.577152063957442
 
+# newton method
+ez_newton = optimize.newton(easy_f, 2) #1.4142135623730954
+m_newton = optimize.newton(med_f, 2) #1.895494267033981
+h_newton = optimize.newton(hard_f, 2) #3.577152063957297
+
