@@ -1,5 +1,4 @@
-from scipy import optimize, stats
-import matplotlib.pyplot as plt
+from scipy import optimize
 import numpy as np
 
 # --- Function 1 ---
@@ -20,27 +19,45 @@ def hard_f(x):
 def hard_f_prime(x):
     return np.exp(-x) - x * np.exp(-x)
 
-#brute-force
-ez_brute = optimize.brute(easy_f, ((1,10),)) # [-8.8817842e-16]
-m_brute = optimize.brute(med_f, ((1,10),)) # [11.51916504]
-h_brute = optimize.brute(hard_f, ((1,10),)) # [57.5]
 
-# bisect
-ez_bisect = optimize.bisect(easy_f, 1, 10) #1.4142135623732202
-m_bisect = optimize.bisect(med_f, 1, 10) #1.895494267033314
-h_bisect = optimize.bisect(hard_f, 1, 10) #3.577152063957442
+def run_methods(name, f, fprime, x0, a, b):
+    print(f"\n=== {name} ===")
 
-#newton method
-ez_newton = optimize.newton(easy_f, 2, fprime = easy_f_prime) # 1.4142135623730951
-m_newton = optimize.newton(med_f, 2, fprime = med_f_prime) #1.895494267033981
-h_newton = optimize.newton(hard_f, 2, fprime = hard_f_prime) #3.577152063957297
-# secant method
-ez_secat = optimize.newton(easy_f, 2) #1.4142135623730954
-m_secat = optimize.newton(med_f, 2) #1.895494267033981
-h_secat = optimize.newton(hard_f, 2) #3.577152063957297
+    # brute-force
+    brute_res = optimize.brute(f, ((a, b),), full_output=True, finish=None)
+    print("Brute root:", brute_res[0], ", Residual:", abs(f(brute_res[0])))
 
-# Brenton method
-ez_brent = optimize.brentq(easy_f, 1, 5) #1.4142135623730618
-m_brent = optimize.brentq(med_f, 1, 5) #1.8954942670339796
-h_brent = optimize.brentq(hard_f, 1,5) #3.5771520639573287
+    # bisect
+    root, info = optimize.bisect(f, a, b, full_output=True)
+    print("Bisect root:", root, ", Iterations:", info.iterations, ", Residual:", abs(f(root)))
 
+    # newton
+    root, info = optimize.newton(f, x0, fprime=fprime, full_output=True)
+    print("Newton root:", root, ", Iterations:", info.iterations, ", Residual:", abs(f(root)))
+
+    # secant
+    root, info = optimize.newton(f, x0, full_output=True)
+    print("Secant root:", root, ", Iterations:", info.iterations, ", Residual:", abs(f(root)))
+
+    # brentq
+    root, info = optimize.brentq(f, a, b, full_output=True)
+    print("Brent root:", root, ", Iterations:", info.iterations, ", Residual:", abs(f(root)))
+
+
+# Запуск для трёх функций
+run_methods("Easy function", easy_f, easy_f_prime, x0=2, a=0, b=3)
+run_methods("Medium function", med_f, med_f_prime, x0=2, a=1, b=3)
+run_methods("Hard function", hard_f, hard_f_prime, x0=2, a=1, b=5)
+
+# --- System of equations example ---
+def system(vars):
+    x, y = vars
+    return [x**2 + y**2 - 4,  # circle
+            x - y]            # line
+
+print("\n=== System of equations (fsolve) ===")
+sol1 = optimize.fsolve(system, [1, 1])   # начальное приближение (положительное решение)
+sol2 = optimize.fsolve(system, [-1, -1]) # начальное приближение (отрицательное решение)
+
+print("Solution 1:", sol1, ", Residuals:", system(sol1))
+print("Solution 2:", sol2, ", Residuals:", system(sol2))
