@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import optimize
+import csv
 
 
 # --- Define the functions and their derivatives ---
